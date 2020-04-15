@@ -1,10 +1,43 @@
+# Modified by Eva Mo
+# Apr 2020
 # Code for evaluating IoU 
 # Nov 2017
 # Eduardo Romera
 #######################
 
 import torch
+import numpy as np
 
+class iouEval_binary:
+
+    def __init__(self, nClasses):
+        self.nClasses = nClasses
+        self.reset()
+
+    def reset (self):
+        classes = self.nClasses 
+        self.I = torch.zeros(classes).double()
+        self.U = torch.zeros(classes).double()
+
+    def addBatch(self, x, y):   #x=preds, y=targets
+        # expecting size: B x H x W for both x & y
+        if (x.is_cuda or y.is_cuda):
+            x = x.cuda()
+            y = y.cuda()
+        #print(np.unique(x[0].cpu().numpy()))
+        #print(np.unique(y[0].cpu().numpy()))
+        intersection = (x & y).float().sum() # will be 0 if Truth = 0 or Prediction = 0
+        union = (x | y).float().sum() # will be 0 if both are 0
+
+        self.I += intersection.double().cpu()
+        self.U += union.double().cpu()
+
+    def getIoU(self):
+        num = self.I + 1e-6
+        den = self.U + 1e-6
+        iou = num / den
+        return iou
+        
 class iouEval:
 
     def __init__(self, nClasses, ignoreIndex=19):

@@ -1,3 +1,6 @@
+# Modified by Eva MO
+# April 2020
+
 # Main code for training ERFNet model in Cityscapes dataset
 # Sept 2017
 # Eduardo Romera
@@ -87,11 +90,7 @@ class CrossEntropyLoss2d(torch.nn.Module):
 def train(args, model, enc=False):
     best_acc = 0
 
-    #TODO: calculate weights by processing dataset histogram (now its being set by hand from the torch values)
-    #create a loder to run all images and calculate histogram of labels, then create weight array using class balancing
-
-    #weight = torch.ones(NUM_CLASSES)
-    pos_weight = torch.FloatTensor([1.5]) # 0.6:0.4
+    pos_weight = torch.FloatTensor([1.5]) # assume background:lane = 0.6:0.4
 
     assert os.path.exists(args.datadir), "Error: datadir (dataset directory) could not be loaded"
 
@@ -107,7 +106,6 @@ def train(args, model, enc=False):
     loader_val = DataLoader(dataset_val, num_workers=args.num_workers, batch_size=args.batch_size, shuffle=False)
 
     if args.cuda:
-        #weight = weight.cuda()
         pos_weight = pos_weight.cuda()
     #criterion = CrossEntropyLoss2d(weight)
     criterion = torch.nn.BCEWithLogitsLoss(pos_weight=pos_weight)
@@ -432,8 +430,10 @@ def main(args):
     """
     next(model.children()).decoder.layers.apply(weights_init)
     next(model.children()).decoder.output_conv.apply(weights_init)
+    """
 
     #print(model.state_dict())
+    """
     f = open('weights5.txt', 'w')
     f.write(str(model.state_dict()))
     f.close()

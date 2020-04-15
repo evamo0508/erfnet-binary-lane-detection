@@ -1,3 +1,5 @@
+# Modified by Eva Mo
+# Apr 2020
 # Code for evaluating IoU 
 # Nov 2017
 # Eduardo Romera

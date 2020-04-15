@@ -67,7 +67,7 @@ class Relabel:
 class ToLabel:
 
     def __call__(self, image):
-        return torch.from_numpy(np.array(image)).long().unsqueeze(0)
+        return torch.from_numpy(np.array(image)).long().unsqueeze(0).unsqueeze(0)
 
 
 class Colorize:
