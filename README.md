@@ -1,5 +1,5 @@
 # Purpose
-This repository was forked. I changed it into a binary lane detection version in order to meet my need in my capstone project at CMU - AutoValet, where we try to segment the right lane out of the entire scene seen in a simulated parking lot. Since our current data are mostly based in the same simulation environment, the training process was relatively easy.
+This repository was forked from Eromera/erfnet_pytorch. I changed it into a binary lane detection version in order to meet my need in my capstone project at CMU - AutoValet, where we try to segment the right lane out of the entire scene seen in a simulated parking lot. Since our current data are mostly based in the same simulation environment, the training process was relatively easy.
 
 To train the network:
 ```
