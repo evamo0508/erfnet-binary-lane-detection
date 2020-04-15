@@ -1,3 +1,18 @@
+# Purpose
+This repository was forked from Eromera/erfnet_pytorch. I changed it into a binary lane detection version in order to meet my need in my capstone project at CMU - AutoValet, where we try to segment the right lane out of the entire scene seen in a simulated parking lot. Since our current data are mostly based in the same simulation environment, the training process was relatively easy.
+
+To train the network:
+```
+$ cd train/
+$ python main.py --savedir [whatever-folder-name-you-want-for-results] --decoder --pretrainedEncoder "../trainined_models/erfnet_encoder_pretrained.pth.tar"
+```
+To test the network:
+```
+$ cd eval/
+$ python avlane_test.py --loadDir "../save/[whatever-folder-name-you-had-for-results]/" --pretrainedEncoder "../trained_models/erfnet_encoder_pretrained.pth.tar"
+```
+Below is the original README.md.
+
 # ERFNet (PyTorch version)
 
 This code is a toolbox that uses **PyTorch** for training and evaluating the **ERFNet** architecture for semantic segmentation.
